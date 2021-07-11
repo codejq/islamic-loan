@@ -57,61 +57,78 @@ font-size:20px;
           </div>
         </div>
       </nav>
-    <div class="container">
+    <div class="container"  >
 
 
 <div class="mb-3">
-	<label for="exampleFormControlInput1" class="form-label">قيمة السلعة </label>
+	<label for="exampleFormControlInput1" class="form-label">المبلغ المراد توزيعه </label>
 	<input type="number" class="form-control"
-	id="productValue" placeholder="">
+	id="totalamount" placeholder="">
   </div>
 
 <div class="mb-3">
-	<label for="exampleFormControlInput1" class="form-label">المقدم </label>
+	<label for="exampleFormControlInput1" class="form-label">اقل مبلغ للفائز </label>
 	<input type="number" class="form-control"
-	id="advancedPayement" placeholder="">
+	id="minaomunt" placeholder="">
 </div>
 <div class="mb-3">
 	<label for="exampleFormControlInput1"
-	class="form-label">نسبة المرابحة  السنوية</label>
+	class="form-label">اكبر مبلغ للفائز</label>
 	<input type="number" class="form-control"
-	id="persentage" placeholder="">
+	id="maxamount" placeholder="">
 </div> 
+ 
 <div class="mb-3">
 	<label for="exampleFormControlInput1" 
-	class="form-label">عدد الاشهر</label>
-	<input type="number" class="form-control"
-	id="NumberOfMonths" placeholder="" value="12">
+	class="form-label">اكبر عدد للفائزين</label>
+	<span id="maxwinner" class="data-out"></span>
 </div>
 <div class="mb-3">
-	<label for="exampleFormControlInput1" 
-	class="form-label">عدد السنوات</label>
-	<span id="numberOfyears" class="data-out"></span>
+	<button id="btnResult">احسب</button>
 </div>
+
 <div class="mb-3">
 	<label for="exampleFormControlInput1" 
-	class="form-label">اجمالي المبلغ مع المرابحة</label>
-	<span id="totalWidthProfit" class="data-out"></span>
+	class="form-label">اقل عدد للفائزين</label>
+	<span id="minwinner" class="data-out"></span>
 </div>
-<div class="mb-3">
-	<label for="exampleFormControlInput1" 
-	class="form-label">اجمالي الربح</label>
-	<span id="totalProfit" class="data-out"></span>
-</div>
-<div class="mb-3">
-	<label for="exampleFormControlInput1" 
-	class="form-label">نسبة المرابحة</label>
-	<span id="profitPersentage" class="data-out"></span>
-</div>
-<div class="mb-3">
-	<label for="exampleFormControlInput1" 
-	class="form-label">قيمة القسط</label>
-	<span id="satalemtValue" class="data-out"></span>
+<div class="row" id="result">
+
 </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 	<script>
 	function CalCulateStaelemts(){
+	document.querySelector('#result').innerHTML  = "";
+	let totalamount = parseFloat(document.querySelector('#totalamount').value);
+	let minaomunt = parseFloat(document.querySelector('#minaomunt').value);
+	let maxamount = parseFloat(document.querySelector('#maxamount').value);
+	let maxwinner  =(parseFloat(totalamount/maxamount)).toFixed(0); 
+	let minwinner  =(parseFloat(totalamount/minaomunt)).toFixed(0); 
+	document.querySelector('#maxwinner').innerText = maxwinner;
+	document.querySelector('#minwinner').innerText = minwinner;
+	let id = 0;
+	addWinner(id++ , maxamount );
+	totalamount = totalamount - maxamount;
+	for(;;){
+		let winnerAmount = getRandomArbitrary(minaomunt ,maxamount );
+		
+		
+		 if(totalamount <= minaomunt 
+		 || isNaN(totalamount) 
+		 || totalamount == null
+		 || totalamount == 0 
+		 || winnerAmount >  totalamount 
+		 || id > 5000){
+			addWinner(id++ , totalamount.toFixed(2)  )
+			break;
+		 }
+		 totalamount = totalamount - winnerAmount;
+		 addWinner(id++ , winnerAmount.toFixed(2) )
+		 console.log(id);
+	}
+
+	/*
 	let productValue = parseFloat(document.querySelector('#productValue').value);
 	let advancedPayement = parseFloat(document.querySelector('#advancedPayement').value);
 	let persentage  = parseFloat(document.querySelector('#persentage').value); 
@@ -123,19 +140,39 @@ font-size:20px;
 	document.querySelector('#totalWidthProfit').innerText = (productValue + totalProfit).toFixed(2);
 	document.querySelector('#satalemtValue').innerText = ((productValue + totalProfit - advancedPayement)/NumberOfMonths).toFixed(2);
 	document.querySelector('#profitPersentage').innerText =(((totalProfit )/(productValue)) * 100.0).toFixed(2);
+*/
+	}
+	
+	function getRandomArbitrary(min, max) {
+		return Math.random() * (max - min) + min;
+	}
 
+
+	function addWinner(id , value ){
+		let htmlTemplate = `<div class="mb-3 col-md-2"> 
+			<label for="exampleFormControlInput1"  
+			class="form-label">${id}</label> 
+			<span id="totalWidthProfit" class="data-out">${value}</span>
+			</div>`;
+		document.querySelector('#result').innerHTML += htmlTemplate;
+		
 	}
 	function AttacheEvents(){
-		const elemets = document.querySelectorAll('.form-control');
+		document.querySelector('#btnResult').addEventListener('click', event => {
+		   CalCulateStaelemts();
+		});
+		
+		/*const elemets = document.querySelectorAll('.form-control');
 		elemets.forEach(el => el.addEventListener('click', event => {
-		  CalCulateStaelemts()
+		   CalCulateStaelemts()
 		}));
 		elemets.forEach(el => el.addEventListener('keydown', event => {
-		  CalCulateStaelemts()
+		   CalCulateStaelemts()
 		}));
 		elemets.forEach(el => el.addEventListener('keyup', event => {
-		  CalCulateStaelemts()
+		   CalCulateStaelemts()
 		}));
+		*/
 	}
 	
 	
