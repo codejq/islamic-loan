@@ -1,0 +1,113 @@
+<html dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="codejq@gmail.com">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>كارت معايده</title>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</head>
+<body style="direction:rtl">
+   
+<nav class="navbar text-white sticky-top" style="direction:rtl;background-color: #28739b;color:#ffffff">
+
+          <a href="index.html" class="navbar-brand " style="color:#ffffff">
+            <strong>كارت معايده</strong>
+          </a>
+ 
+	  <img src="./logo.png" width="150" height="30" class="d-inline-block align-top" alt="">
+ 
+  </nav>
+      
+  
+     <!-- ======= Menu Section ======= -->
+<section id="menu" class="menu section-bg">
+  <div class="container" data-aos="fade-up">
+
+ 
+
+    <div class="row" data-aos="fade-up" data-aos-delay="100">
+	
+	
+
+<div class="col-md-12 text-center p-3"> 
+	<p>اكتب اسمك هنا
+	<input type="color" id="textcolor" name="textcolor" value="#27739b" onkeyup="WriteToImage();" onchange="WriteToImage();" onclick="WriteToImage();" onpropertychanged="WriteToImage();">
+	</p>
+	<p>
+	<textarea id="usertext" style="min-width:300px;font-size:20px;min-height:80px;font-family:Calibri;font-weight:800" onkeyup="WriteToImage();" onchange="WriteToImage();" onclick="WriteToImage();" onpropertychanged="WriteToImage();"></textarea>
+	 </p>
+
+	<button class="btn btn-success p-2 " onclick="DownloadImage();return false;">تحميل الصورة </button>
+</div>
+<div class="col-md-12 text-center p-3"> 
+<canvas class="img-fluid" id="myCanvas" width="600" height="600"></canvas>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="navbar  fixed-bottom" style="background-color: #28739b;color:#ffffff">
+    <div class="container">
+        <div class="copyright" style="color:#ffffff">
+         جميع الحقوق محفوظة © 
+        </div>
+        
+      </div>
+    </footer><!-- End Footer -->
+	
+	
+<script>
+window.onload = function(){
+     var canvas = document.getElementById("myCanvas");
+     var context = canvas.getContext("2d");
+     var imageObj = new Image();
+     imageObj.onload = function(){
+         context.drawImage(imageObj, 0, 0);
+         context.font = "25pt Calibri ";
+         //context.fillText("السلام عليكم ورحمة الله وبركاته ", 800, 60);
+     };
+     imageObj.src = "./img2.jpg"; 
+};
+
+function Download(){
+  var link = document.createElement('a');
+  link.download = 'filename.png';
+  link.href = document.getElementById('myCanvas').toDataURL("image/png")
+  link.click();
+}
+
+function DownloadImage(){
+	var canvas = document.getElementById("myCanvas");
+	var data = canvas.toDataURL("image/png");
+	var link = document.createElement('a');
+	link.download = 'filename.png';
+	link.href = data.replace("image/png", "image/octet-stream");
+	link.click();
+}
+
+function WriteToImage(){
+	 var text = document.getElementById("usertext").value;
+     var canvas = document.getElementById("myCanvas");
+     var context = canvas.getContext("2d");
+     var imageObj = new Image();
+     imageObj.onload = function(){
+         context.drawImage(imageObj, 0, 0);
+         context.font = "25pt Calibri ";
+		 context.fillStyle = document.getElementById("textcolor").value;
+		 context.strokeStyle = document.getElementById("textcolor").value;
+		 console.log(document.getElementById("textcolor").value);
+		 context.textAlign = "center";
+		 var textArray = text.split("\n");
+		 for(var i = 0 ; i < textArray.length ; i++){ 
+			context.strokeText(textArray[i], 50+ canvas.width/2, 430 + (i * 60) );
+			context.fillText(textArray[i], 50 +canvas.width/2, 429 + (i * 60) );
+			
+		 }
+     };
+     imageObj.src = "./img2.jpg"; 
+}
+</script>
+
+</body></html>
