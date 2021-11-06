@@ -38,13 +38,10 @@ style="direction:rtl;background-color: #28739b;color:#ffffff">
 	<p>اختر الصورة من هنا 
 	<input type="file" id="UploadImageInput" 
 	name="UploadImageInput" value="#27739b" 
-	onkeyup="UploadImage();" 
-	onchange="UploadImage();" 
-	onclick="UploadImage();" 
-	onpropertychanged="UploadImage();">
+	>
 	</p>
 <img id="logo" src="">
-<img id="originalImage" style="display:none;position:absolute" >
+<img id="originalImage" onload="UploadImage();"  style="display:none;position:absolute" >
 
 	<button class="btn btn-success p-2 " onclick="DownloadImage();return false;">تحميل الصورة </button>
 </div>
