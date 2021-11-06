@@ -38,7 +38,10 @@ style="direction:rtl;background-color: #28739b;color:#ffffff">
 	<p>اختر الصورة من هنا 
 	<input type="file" id="UploadImageInput" 
 	name="UploadImageInput" value="#27739b" 
-	>
+	onkeyup="ChangeOrginalImage();" 
+	onchange="ChangeOrginalImage();" 
+	onclick="ChangeOrginalImage();" 
+	onpropertychanged="ChangeOrginalImage();">
 	</p>
 <img id="logo" src="">
 <img id="originalImage" onload="UploadImage();"  style="display:none;position:absolute" >
@@ -92,6 +95,17 @@ function DownloadImage(){
 	link.href = data.replace("image/png", "image/octet-stream");
 	link.click();
 }
+function ChangeOrginalImage(){
+	var dataUrl = "";  
+	var input = document.getElementById("UploadImageInput");
+	var fReader = new FileReader();
+	fReader.readAsDataURL(input.files[0]);
+	fReader.onloadend = function(event){
+		var img = document.getElementById("originalImage");
+		img.src = event.target.result;
+		
+	}
+}
 
 function UploadImage(){
 /*
@@ -114,15 +128,7 @@ function UploadImage(){
 		 }
      };
      imageObj.src = "./img2.jpg";*/ 
-	var dataUrl = "";  
-	var input = document.getElementById("UploadImageInput");
-	var fReader = new FileReader();
-	fReader.readAsDataURL(input.files[0]);
-	fReader.onloadend = function(event){
-		var img = document.getElementById("originalImage");
-		img.src = event.target.result;
-		DrowImageToCanvas(event.target.result)
-	}
+	DrowImageToCanvas(document.getElementById("originalImage").src)
 	 
 
 
