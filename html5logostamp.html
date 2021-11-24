@@ -21,7 +21,7 @@ style="direction:rtl;background-color: #28739b;color:#ffffff">
             <strong>كتابة الشعار علي الصور</strong>
           </a>
  
-	  <img src="./images/1.jpg" width="150" height="30" 
+	  <img src="./images/1.svg" width="100" 
 	  class="d-inline-block align-top" alt="">
  
   </nav>
@@ -69,7 +69,7 @@ style="direction:rtl;background-color: #28739b;color:#ffffff">
 	
 	
 <script>
-const logoPath ="./images/1.jpg";
+const logoPath ="./images/1.png";
 window.onload = function(){
      /*var canvas = document.getElementById("myCanvas");
      var context = canvas.getContext("2d");
@@ -80,7 +80,7 @@ window.onload = function(){
          //context.fillText("السلام عليكم ورحمة الله وبركاته ", 800, 60);
      };
      imageObj.src = "./img2.jpg";*/
-	document.getElementById("originalImage").src=logoPath;
+	//document.getElementById("originalImage").src=logoPath;
 };
 
 function Download(){
@@ -144,7 +144,7 @@ function DrowImageToCanvas(dataUrl){
 	 canvas.height = img.naturalHeight;
      var context = canvas.getContext("2d");
      var imageObj = new Image();
-	 var myImage = new Image();
+	 var myImage = new Image(50,50);
 	 myImage.src = logoPath;
      imageObj.onload = function(){
          context.drawImage(imageObj, 0, 0);
