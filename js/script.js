@@ -16,7 +16,7 @@ window.onload = function () {
     })
   );
 };
-
+// 
 function Download() {
   var link = document.createElement("a");
   link.download = "filename.png";
