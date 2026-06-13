@@ -106,7 +106,7 @@ function ArrayImages() {
       fReader.readAsDataURL(fileInput.files[i]);
       fReader.onloadend = function (event) {
         fileList.push(event.target.result);
-        ImgContainer.innerHTML += `<img id="${Math.random()}" class="singleImg" onload="${getImgs()}" src="${
+        ImgContainer.innerHTML += `<img id="${Math.random()}" class="singleImg" onload="getImgs()" src="${
           event.target.result
         }"/>`;
         return ImgContainer;
@@ -119,6 +119,16 @@ function ArrayImages() {
   });
 }
 ArrayImages();
+
+function ResetImages() {
+  // remove all generated canvases from the result area
+  const photoResult = document.querySelector("#photoResult");
+  photoResult.querySelectorAll("canvas").forEach((c) => c.remove());
+  // clear the loaded image list
+  document.getElementById("arrayofphoto").innerHTML = "";
+  // clear the file input so the same files can be re-selected
+  document.getElementById("UploadImageInput").value = "";
+}
 
 function getImgs() {
   const readChild = document.querySelector("#arrayofphoto");
